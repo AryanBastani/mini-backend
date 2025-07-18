@@ -1,0 +1,61 @@
+{
+  "id": "module-1-unit-1",
+  "title": "Quantum Computing Basics\nCOMP 7150",
+  "learning_objective": "Understand the core concepts behind quantum computers, including qubits, superposition, and entanglement, and explore how quantum systems differ from classical computers.",
+  "content": {
+    "core_explanation": "Qubits vs. classical bits\n\nQuantum phenomena: superposition, entanglement\n\n\nWeekly discussions—worth 10% of grade\n\nA = 90–100%\nB = 80–89%\nC = 70–79%\nD = 60–69%\nF = ≤ 59%\n\nModule 1.2: Real-world applications of quantum computing",
+    "key_terms": [
+      "Qubit",
+      "Superposition",
+      "Entanglement",
+      "Quantum Gate",
+      "Interference",
+      "Quantum Decoherence",
+      "Bloch Sphere"
+    ],
+    "supporting_details": [],
+    "contents": [
+      {
+        "type": "text",
+        "value": "Welcome to Quantum Computing! In this unit, we’ll introduce the strange but powerful world of quantum information processing. Forget 0s and 1s—this is where things get weird."
+      },
+      {
+        "type": "markdown",
+        "value": "### The Core Unit: Qubits\nUnlike classical bits, which can only be 0 or 1, **qubits** can be in a superposition of both states. That means they can represent multiple values at once."
+      },
+      {
+        "type": "latex",
+        "value": "|\\psi\\rangle = \\alpha|0\\rangle + \\beta|1\\rangle"
+      },
+      {
+        "type": "text",
+        "value": "Here, |ψ⟩ represents the state of a qubit, where α and β are complex numbers describing the probabilities of being measured as 0 or 1."
+      },
+      {
+        "type": "markdown",
+        "value": "### Quantum Weirdness: Entanglement\nTwo qubits can become *entangled*, meaning the state of one instantly affects the state of the other—even across vast distances."
+      },
+      {
+        "type": "image",
+        "src": "Assets/entanglement.jpg",
+        "alt": "Illustration of entangled qubits influencing each other"
+      },
+      {
+        "type": "markdown",
+        "value": "### Real-World Metaphor\nThink of a coin spinning in the air—it’s not just heads or tails, it's both until it lands. That’s superposition. Now imagine two coins always landing the same way, no matter where they’re flipped. That’s entanglement."
+      },
+      {
+        "type": "text",
+        "value": "💡 Did you know? Google’s quantum processor 'Sycamore' performed a calculation in 200 seconds that would take a supercomputer thousands of years!"
+      },
+      {
+        "type": "markdown",
+        "value": "### Practical Lab Preview\nWhile you won’t be using real quantum hardware yet, you’ll simulate quantum gates and circuits using software like IBM's Qiskit."
+      },
+      {
+        "type": "markdown",
+        "value": "### Assessment Tip\nWeekly discussion participation counts for **10%** of your final grade. Be active, and don't be afraid to ask 'weird' questions—quantum is weird by nature!"
+      }
+    ]
+  }
+}

@@ -1,0 +1,136 @@
+{
+  "id": "course-quantum-computing-101",
+  "title": "Quantum Computing 101",
+  "description": "An introductory course to the principles and applications of quantum computing, including qubits, gates, algorithms, and quantum logic.",
+  "level": "Intermediate",
+  "estimated_duration_hours": 10,
+  "instructor": "Dr. Jane Doe",
+  "modules": [
+    {
+      "id": "module-1",
+      "title": "Foundations of Quantum Computing",
+      "lectures": [
+        {
+          "id": "lecture-1-1",
+          "title": "Introduction to Quantum Computing",
+          "lessons": [
+            {
+              "id": "module-1-unit-1",
+              "title": "What is Quantum Computing?",
+              "learning_objective": "",
+              "content": {
+                "core_explanation": "",
+                "key_terms": [],
+                "supporting_details": [],
+                "contents": []
+              },
+              "metadata": {
+                "difficulty": "introductory",
+                "expected_duration_minutes": 10,
+                "style_preferences": {
+                  "tone": "warm",
+                  "pacing": "moderate",
+                  "delivery_format": "interactive",
+                  "example_type": "relatable",
+                  "preferred_metaphor_type": "real-world"
+                },
+                "prerequisites": [],
+                "next_unit": "module-1-unit-2"
+              }
+            },
+            {
+              "id": "module-1-unit-2",
+              "title": "Classical vs. Quantum Systems",
+              "learning_objective": "",
+              "content": {
+                "core_explanation": "",
+                "key_terms": [],
+                "supporting_details": [],
+                "contents": []
+              },
+              "metadata": {
+                "difficulty": "introductory",
+                "expected_duration_minutes": 10,
+                "style_preferences": {
+                  "tone": "warm",
+                  "pacing": "moderate",
+                  "delivery_format": "interactive",
+                  "example_type": "relatable",
+                  "preferred_metaphor_type": "real-world"
+                },
+                "prerequisites": [],
+                "next_unit": "module-1-unit-3"
+              }
+            }
+          ]
+        },
+        {
+          "id": "lecture-1-2",
+          "title": "Key Concepts",
+          "lessons": [
+            {
+              "id": "module-1-unit-3",
+              "title": "Superposition and Qubits",
+              "learning_objective": "",
+              "content": {
+                "core_explanation": "",
+                "key_terms": [],
+                "supporting_details": [],
+                "contents": []
+              },
+              "metadata": {
+                "difficulty": "intermediate",
+                "expected_duration_minutes": 15,
+                "style_preferences": {
+                  "tone": "warm",
+                  "pacing": "moderate",
+                  "delivery_format": "interactive",
+                  "example_type": "relatable",
+                  "preferred_metaphor_type": "real-world"
+                },
+                "prerequisites": [],
+                "next_unit": "module-1-unit-4"
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "module-2",
+      "title": "Quantum Logic and Circuits",
+      "lectures": [
+        {
+          "id": "lecture-2-1",
+          "title": "Quantum Gates",
+          "lessons": [
+            {
+              "id": "module-2-unit-1",
+              "title": "Basic Quantum Gates",
+              "learning_objective": "",
+              "content": {
+                "core_explanation": "",
+                "key_terms": [],
+                "supporting_details": [],
+                "contents": []
+              },
+              "metadata": {
+                "difficulty": "intermediate",
+                "expected_duration_minutes": 15,
+                "style_preferences": {
+                  "tone": "warm",
+                  "pacing": "moderate",
+                  "delivery_format": "interactive",
+                  "example_type": "relatable",
+                  "preferred_metaphor_type": "real-world"
+                },
+                "prerequisites": [],
+                "next_unit": "module-2-unit-2"
+              }
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

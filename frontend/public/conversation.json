@@ -1,0 +1,41 @@
+[
+    {
+        "role": "user",
+        "content": "What is quantum computing?",
+        "image": ""
+    },
+    {
+        "role": "system",
+        "content": "Quantum computing is a type of computation that uses quantum bits, or qubits, which can exist in multiple states at once, enabling certain calculations to be performed much faster than with traditional computers.",
+        "image": "Assets/quantum.jpeg"
+    },
+    {
+        "role": "user",
+        "content": "How are qubits different from normal bits?",
+        "image": ""
+    },
+    {
+        "role": "system",
+        "content": "Normal bits in classical computing can only be 0 or 1 at any time, while qubits can be 0, 1, or both at once (a state known as superposition). This allows quantum computers to process more information simultaneously.",
+        "image": "Assets/qubit.jpg"
+    },
+    {
+        "role": "user",
+        "content": "What makes superposition useful in real-world applications?"
+    },
+    {
+        "role": "system",
+        "content": "Superposition allows quantum computers to perform many calculations at once, which can significantly speed up tasks such as cryptography, optimization problems, and complex simulations in fields like chemistry and physics.",
+        "image": "Assets/superposition.png"
+    },
+    {
+        "role": "user",
+        "content": "Can you explain entanglement in quantum computing?",
+        "image": ""
+    },
+    {
+        "role": "system",
+        "content": "Entanglement is a quantum phenomenon where two qubits become linked, such that the state of one qubit instantly influences the state of the other, no matter the distance between them. This property can be used for secure communication and advanced computing techniques.",
+        "image": "Assets/entanglement.jpg"
+    }
+]
