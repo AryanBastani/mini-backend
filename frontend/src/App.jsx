@@ -5,7 +5,7 @@ import UserProfilePage from "./pages/UserProfilePage";
 import 'bootstrap/dist/css/bootstrap.min.css';
 
 function App() {
-  return <UserProfilePage />;
+  return <CoursePage />;
 }
 
 export default App;
