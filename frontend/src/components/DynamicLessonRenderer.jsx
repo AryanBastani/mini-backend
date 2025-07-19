@@ -32,6 +32,20 @@ function DynamicLessonRenderer({ contents }) {
               />
             );
 
+          case "video":
+            return (
+              <video key={index} controls style={{ width: "80%", margin: "1rem 0" }}>
+                <source src={`/${item.src}`} type="video/mp4" />
+                Your browser does not support the video tag.
+              </video>
+            );
+
+          case "quiz":
+            return (
+              <QuizComponent key={index} quiz={item.content} />
+            );
+
+
           default:
             return null;
         }
