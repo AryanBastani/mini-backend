@@ -1,65 +1,49 @@
-// src/pages/CoursePage.jsx
-import React, { useState, useEffect } from 'react';
-import CourseSidebar from '../components/CourseSidebar';
-import DynamicLessonRenderer from '../components/DynamicLessonRenderer';
+import React, { useEffect, useState } from "react";
+import CourseSidebar from "../components/CourseSidebar";
+import DynamicLessonRenderer from "../components/DynamicLessonRenderer";
+import "bootstrap/dist/css/bootstrap.min.css";
+import "../styles/CoursePage.css";
 
 const CoursePage = () => {
-  const [courseData, setCourseData] = useState(null);
-  const [selectedLesson, setSelectedLesson] = useState(null);
-  const [lessonContent, setLessonContent] = useState(null);
+  const [course, setCourse] = useState(null);
+  const [selectedLessonId, setSelectedLessonId] = useState(null);
+  const [lesson, setLesson] = useState(null);
 
-  // useEffect(() => {
-  //   fetch('/api/course-quantum-computing-101')
-  //     .then(res => res.json())
-  //     .then(data => setCourseData(data));
-  // }, []);
-
-    useEffect(() => {
+  useEffect(() => {
     fetch("/course.json")
       .then((res) => res.json())
-      .then((data) => setCourseData(data));
+      .then((data) => setCourse(data));
   }, []);
 
   useEffect(() => {
-    if (selectedLesson) {
-      fetch(`/api/course-quantum-computing-101/lesson/?lesson_id=${selectedLesson}`)
-        .then(res => res.json())
-        .then(data => setLessonContent(data.page_contents));
-    }
-  }, [selectedLesson]);
+    if (!selectedLessonId) return;
+    fetch("/lesson.json")
+      .then((res) => res.json())
+      .then((data) => setLesson(data));
+  }, [selectedLessonId]);
 
-  if (!courseData) return <div className="p-4">Loading course...</div>;
-
-  // const [course, setCourse] = useState(null);
-  // const [selectedLesson, setSelectedLesson] = useState(null);
-
-  // useEffect(() => {
-  //   fetch("/course.json")
-  //     .then((res) => res.json())
-  //     .then((data) => setCourse(data));
-  // }, []);
-
-  // const handleLessonSelect = (lessonId) => {
-  //   fetch("/lesson.json")
-  //     .then((res) => res.json())
-  //     .then((data) => setSelectedLesson(data));
-  // };
-
-  // if (!course) return <div>Loading course...</div>;
+  if (!course) return <div className="loading">Loading course...</div>;
 
   return (
-    <div className="d-flex">
-      <CourseSidebar
-        course={courseData}
-        selectedLessonId={selectedLesson}
-        onSelectLesson={setSelectedLesson}
-      />
-      <div className="p-4 flex-grow-1">
-        {lessonContent ? (
-          <DynamicLessonRenderer contents={lessonContent} />
-        ) : (
-          <p className="text-muted">Please select a lesson to begin.</p>
-        )}
+    <div className="course-page">
+      <div className="sidebar-container">
+        <CourseSidebar
+          course={course}
+          selectedLessonId={selectedLessonId}
+          onSelectLesson={(id) => setSelectedLessonId(id)}
+        />
+      </div>
+
+      <div className="lesson-wrapper">
+        <main className="lesson-content">
+          {selectedLessonId && lesson?.content?.contents ? (
+            <DynamicLessonRenderer contents={lesson.content.contents} />
+          ) : (
+            <div className="placeholder-message">
+              Please select a lesson from the sidebar.
+            </div>
+          )}
+        </main>
       </div>
     </div>
   );
