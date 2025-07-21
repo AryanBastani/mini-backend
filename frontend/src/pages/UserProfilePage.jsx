@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import ProfileForm from '../components/forms/ProfileForm';
 import { Spinner } from 'react-bootstrap';
+import '../styles/UserProfilePage.css'
 
 const UserProfilePage = ({ userId }) => {
   const [profileData, setProfileData] = useState(null);
