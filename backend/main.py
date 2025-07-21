@@ -97,3 +97,8 @@ def update_profile():
         return jsonify({
             "error": "Method not allowed"
         }), 405
+    
+
+
+if __name__ == "__main__":
+    app.run(debug=True, port=5000) 

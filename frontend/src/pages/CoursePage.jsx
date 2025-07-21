@@ -9,17 +9,32 @@ const CoursePage = () => {
   const [selectedLessonId, setSelectedLessonId] = useState(null);
   const [lesson, setLesson] = useState(null);
 
+  const courseId = "course-quantum-computing-101";
+  const userId = "123"; 
+
   useEffect(() => {
-    fetch("/course.json")
+    fetch("/api/${courseId}/?user_id=${userId}")
       .then((res) => res.json())
-      .then((data) => setCourse(data));
+      .then((data) => {
+        const parsedCourse = JSON.parse(data.data);
+        setCourse(parsedCourse);
+        console.log("Course:", parsedCourse);
+      })
+      .catch((err) => console.error("Failed to load course:", err));
   }, []);
 
   useEffect(() => {
     if (!selectedLessonId) return;
-    fetch("/lesson.json")
-      .then((res) => res.json())
-      .then((data) => setLesson(data));
+    
+    fetch(`/api/${courseId}/lesson/?lesson_id=${selectedLessonId}&user_id=${userId}`)
+    .then((res) => res.json())
+    .then((data) => {
+      const parsedLesson = JSON.parse(data.data);  // backend returns a stringified JSON
+      setLesson(parsedLesson);
+    })
+    .catch((err) => {
+      console.error("Failed to load lesson:", err);
+    });
   }, [selectedLessonId]);
 
   if (!course) return <div className="loading">Loading course...</div>;
