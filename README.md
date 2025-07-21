@@ -14,17 +14,17 @@ $P_c \approx \frac{3}{8 \pi} \frac{G M^2}{R^4}$
 - #### Videos, Images and Gifs - Example Idea :
 
     <div style="text-align:center">
-        <img src="Assets/Readme/example_1.png" alt="just for example" width="63%" />
+        <img src="backend/Assets/Readme/example_1.png" alt="just for example" width="63%" />
     </div>
 
 - #### Diagrams - Example Idea :
     <div style="text-align:center">
-        <img src="Assets/Readme/example_3.png" alt="just for example" width="63%" />
+        <img src="backend/Assets/Readme/example_3.png" alt="just for example" width="63%" />
     </div>
 
 - #### Interactive Visuals and Quizzes - Example Idea :
     <div style="text-align:center">
-        <img src="Assets/Readme/example_2.png" alt="just for example" width="63%" />
+        <img src="backend/Assets/Readme/example_2.png" alt="just for example" width="63%" />
     </div>
 
 
@@ -214,3 +214,52 @@ then run mini-backend by :
 ```
 python3 main.py
 ```
+
+
+Here’s an updated version of your **README** section that includes **frontend installation and usage instructions** alongside the backend:
+
+---
+
+## Installation and Usage
+
+### Backend
+
+to install necessary packages simply do :
+
+```bash
+pip3 install flask flask-cors
+```
+
+Then run the mini-backend using:
+
+```bash
+python3 backend/main.py
+```
+
+---
+
+### Frontend (Vite + React)
+
+First, make sure you have **Node.js** and **npm** installed.
+Then navigate to the `frontend/` directory and install all dependencies listed in `package.json`:
+
+```bash
+cd frontend
+npm install
+```
+
+To start the frontend development server:
+
+```bash
+npm run dev
+```
+
+Once the server is running, open your browser and go to:
+
+```
+http://localhost:5173/
+```
+
+This will load the frontend interface.
+
+---
