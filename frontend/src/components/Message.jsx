@@ -8,11 +8,11 @@ const Message = ({ message }) => {
   const { role, timestamp } = message;
   const text = message.text || message.content || '';
   const isUser = role === 'user';
-  const alignClass = isUser ? 'text-end' : 'text-start';
+  const alignClass = isUser ? 'user-align' : 'tutor-align';
   const bubbleClass = isUser ? 'user-message' : 'tutor-message';
 
   return (
-    <div className={`message-row ${alignClass}`}>
+    <div className={`message-container ${alignClass}`}>
       <div className={`message-bubble ${bubbleClass}`}>
         <ReactMarkdown
           components={{
@@ -22,10 +22,12 @@ const Message = ({ message }) => {
         >
           {text}
         </ReactMarkdown>
-        <div className="message-timestamp">
-          {timestamp ? new Date(timestamp).toLocaleTimeString() : ''}
-        </div>
       </div>
+      {timestamp && (
+        <div className="message-timestamp">
+          {new Date(timestamp).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
+        </div>
+      )}
     </div>
   );
 };

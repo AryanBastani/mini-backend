@@ -4,7 +4,7 @@ import MessageInput from './MessageInput';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import '../styles/Chatbox.css';
 
-const Chatbox = ({ messages = [], onSendMessage }) => {
+const Chatbox = ({ messages = [], onSendMessage, lessonSelected }) => {
   const [isRecording, setIsRecording] = useState(false);
 
   const handleSend = (text) => {
@@ -19,20 +19,33 @@ const Chatbox = ({ messages = [], onSendMessage }) => {
   };
 
   return (
-    <div className="chatbox-container card">
-      <div className="card-header bg-primary text-white">
-        <h5 className="mb-0">Tutor Chat</h5>
+    <div className="chatbox-container">
+      <div className="chatbox-header">
+        <h5 className="mb-0">AI Tutor</h5>
       </div>
-      <div className="card-body chat-messages">
-        {messages.map((msg, index) => (
-          <Message key={index} message={msg} />
-        ))}
+      <div className="chat-messages-area">
+        {lessonSelected ? (
+          messages.length > 0 ? (
+            messages.map((msg, index) => (
+              <Message key={index} message={msg} />
+            ))
+          ) : (
+            <div className="chat-placeholder">
+              <span>Ask a question to get started.</span>
+            </div>
+          )
+        ) : (
+          <div className="chat-placeholder">
+            <span>Select a lesson to activate the chat.</span>
+          </div>
+        )}
       </div>
-      <div className="card-footer">
+      <div className="chatbox-footer">
         <MessageInput
           onSendMessage={handleSend}
           isRecording={isRecording}
           onToggleRecording={handleToggleRecording}
+          disabled={!lessonSelected}
         />
       </div>
     </div>

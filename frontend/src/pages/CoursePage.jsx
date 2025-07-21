@@ -86,11 +86,13 @@ const CoursePage = () => {
     .catch((err) => console.error("Failed to send message:", err));
   };
 
-  if (!course) return <div className="loading">Loading course...</div>;
+  if (!course) {
+    return <div className="loading-fullscreen">Loading course...</div>;
+  }
 
   return (
-    <div className="course-page d-flex">
-      <div className="sidebar-container">
+    <div className="course-page-container">
+      <div className="sidebar-column">
         <CourseSidebar
           course={course}
           selectedLessonId={selectedLessonId}
@@ -98,24 +100,26 @@ const CoursePage = () => {
         />
       </div>
 
-      <div className="lesson-wrapper flex-grow-1">
-        <main className="lesson-content p-4">
+      <main className="lesson-column">
+        <div className="lesson-content-area">
           {selectedLessonId && lesson?.content?.contents ? (
             <DynamicLessonRenderer contents={lesson.content.contents} />
           ) : (
-            <div className="placeholder-message">
-              Please select a lesson from the sidebar.
+            <div className="placeholder-container">
+              <h2 className="placeholder-title">Welcome to {course.title}</h2>
+              <p className="placeholder-text">Please select a lesson from the sidebar to begin your learning journey.</p>
             </div>
           )}
-        </main>
-      </div>
+        </div>
+      </main>
 
-      <div className="chat-container">
+      <aside className="chat-column">
         <Chatbox
           messages={chatHistories[selectedLessonId] || []}
           onSendMessage={(text) => handleSendMessage(selectedLessonId, text)}
+          lessonSelected={!!selectedLessonId}
         />
-      </div>
+      </aside>
     </div>
   );
 };

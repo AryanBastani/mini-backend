@@ -1,0 +1,616 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Academic Course Page</title>
+    
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    
+    <!-- Google Fonts: Inter -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+    <!-- Font Awesome for Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+
+    <!-- KaTeX for Math Rendering -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.css">
+
+    <style>
+        /* General Styling & Theming */
+        :root {
+            --sidebar-width: 280px;
+            --chat-width: 340px;
+            --primary-color: #4a5568; /* Slate */
+            --primary-color-light: #e2e8f0;
+            --primary-color-dark: #2d3748;
+            --background-color: #f7fafc;
+            --border-color: #e2e8f0;
+            --text-color: #2d3748;
+            --text-color-light: #718096;
+            --font-family-sans: 'Inter', sans-serif;
+        }
+
+        body {
+            font-family: var(--font-family-sans);
+            background-color: var(--background-color);
+            color: var(--text-color);
+            margin: 0;
+            overflow: hidden; /* Prevent body scroll */
+        }
+
+        /* Main Page Layout */
+        .course-page-wrapper {
+            display: grid;
+            grid-template-columns: var(--sidebar-width) 1fr var(--chat-width);
+            height: 100vh;
+            width: 100vw;
+        }
+
+        /* Generic container for scrollable areas */
+        .scrollable-container {
+            height: 100vh;
+            overflow-y: auto;
+            padding: 1.5rem;
+        }
+        .scrollable-container::-webkit-scrollbar {
+            width: 6px;
+        }
+        .scrollable-container::-webkit-scrollbar-thumb {
+            background-color: #cbd5e0;
+            border-radius: 3px;
+        }
+        .scrollable-container::-webkit-scrollbar-track {
+            background: transparent;
+        }
+
+        /* Sidebar (Left) */
+        .sidebar-container {
+            background-color: #ffffff;
+            border-right: 1px solid var(--border-color);
+            grid-column: 1 / 2;
+        }
+        
+        .course-sidebar h4 {
+            font-weight: 600;
+            font-size: 1.25rem;
+            color: var(--text-color);
+        }
+
+        .course-sidebar .text-muted {
+            font-size: 0.9rem;
+            color: var(--text-color-light) !important;
+        }
+
+        .module-header {
+            font-size: 0.8rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            color: var(--text-color-light);
+            margin-top: 1.5rem;
+            margin-bottom: 0.5rem;
+            display: flex;
+            align-items: center;
+        }
+        .module-header .fa-layer-group {
+            margin-right: 0.5rem;
+            font-size: 0.9rem;
+        }
+
+        .lesson-list {
+            list-style: none;
+            padding-left: 0;
+        }
+
+        .lesson-item {
+            padding: 0.6rem 1rem;
+            margin: 0.2rem 0;
+            cursor: pointer;
+            font-size: 0.95rem;
+            font-weight: 500;
+            border-radius: 8px;
+            transition: all 0.2s ease-in-out;
+            display: flex;
+            align-items: center;
+        }
+        .lesson-item .fa-book-open {
+            margin-right: 0.75rem;
+            color: var(--text-color-light);
+            transition: color 0.2s ease-in-out;
+        }
+
+        .lesson-item:hover {
+            background-color: var(--background-color);
+        }
+        
+        .lesson-item.active {
+            background-color: var(--primary-color);
+            color: white;
+            font-weight: 600;
+        }
+        .lesson-item.active .fa-book-open {
+            color: white;
+        }
+
+        /* Main Lesson Content (Center) */
+        .lesson-content-container {
+            grid-column: 2 / 3;
+        }
+
+        .lesson-content {
+            max-width: 800px;
+            margin: 0 auto;
+            font-size: 1.1rem;
+            line-height: 1.7;
+        }
+        
+        .placeholder-message {
+            text-align: center;
+            margin-top: 8rem;
+            color: var(--text-color-light);
+        }
+        .placeholder-message .fa-arrow-left {
+            margin-right: 0.5rem;
+        }
+
+        /* Chatbox (Right) */
+        .chat-container {
+            background-color: #ffffff;
+            border-left: 1px solid var(--border-color);
+            grid-column: 3 / 4;
+            display: flex;
+            flex-direction: column;
+            padding: 0; /* Remove padding from scrollable container */
+        }
+
+        .chatbox-header {
+            padding: 1.5rem;
+            border-bottom: 1px solid var(--border-color);
+        }
+        .chatbox-header h5 {
+            font-weight: 600;
+            margin: 0;
+        }
+
+        .chat-messages {
+            flex-grow: 1;
+            overflow-y: auto;
+            padding: 1.5rem;
+        }
+        .chat-messages::-webkit-scrollbar {
+            width: 6px;
+        }
+        .chat-messages::-webkit-scrollbar-thumb {
+            background-color: #cbd5e0;
+            border-radius: 3px;
+        }
+
+        .message-row {
+            display: flex;
+            margin-bottom: 1rem;
+        }
+        .message-row.user-row {
+            justify-content: flex-end;
+        }
+        .message-row.tutor-row {
+            justify-content: flex-start;
+        }
+
+        .message-bubble {
+            padding: 0.75rem 1.25rem;
+            border-radius: 1.25rem;
+            max-width: 85%;
+            font-size: 0.95rem;
+            line-height: 1.5;
+        }
+
+        .user-message {
+            background-color: var(--primary-color);
+            color: white;
+            border-bottom-right-radius: 0.25rem;
+        }
+
+        .tutor-message {
+            background-color: var(--background-color);
+            color: var(--text-color);
+            border: 1px solid var(--border-color);
+            border-bottom-left-radius: 0.25rem;
+        }
+
+        .chatbox-footer {
+            padding: 1.5rem;
+            border-top: 1px solid var(--border-color);
+            background-color: #ffffff;
+        }
+
+        .message-input-form {
+            display: flex;
+            align-items: center;
+        }
+
+        .message-input-form .form-control {
+            flex-grow: 1;
+            border-radius: 8px;
+            border: 1px solid var(--border-color);
+            padding: 0.75rem 1rem;
+            font-size: 0.95rem;
+        }
+        .message-input-form .form-control:focus {
+            box-shadow: 0 0 0 3px var(--primary-color-light);
+            border-color: var(--primary-color);
+        }
+
+        .message-input-form .btn {
+            border-radius: 8px;
+            padding: 0.75rem;
+            width: 44px;
+            height: 44px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-left: 0.5rem;
+        }
+        .message-input-form .btn-primary {
+            background-color: var(--primary-color);
+            border-color: var(--primary-color);
+        }
+        .message-input-form .btn-primary:hover {
+            background-color: var(--primary-color-dark);
+            border-color: var(--primary-color-dark);
+        }
+
+        /* Responsive Design */
+        @media (max-width: 1200px) {
+            :root {
+                --sidebar-width: 240px;
+                --chat-width: 300px;
+            }
+        }
+
+        @media (max-width: 992px) {
+            .course-page-wrapper {
+                grid-template-columns: var(--sidebar-width) 1fr;
+            }
+            .chat-container {
+                /* On smaller screens, the chat could be a modal or an overlay */
+                /* For this example, we'll hide it */
+                display: none; 
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .course-page-wrapper {
+                grid-template-columns: 1fr;
+            }
+            .sidebar-container {
+                /* The sidebar could be a toggleable overlay */
+                /* For this example, we'll hide it */
+                display: none;
+            }
+            .lesson-content-container {
+                padding: 1rem;
+            }
+        }
+
+    </style>
+</head>
+<body>
+    <div id="root"></div>
+
+    <!-- React and ReactDOM -->
+    <script src="https://unpkg.com/react@18/umd/react.development.js"></script>
+    <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
+    
+    <!-- Babel for JSX -->
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+    
+    <!-- ReactMarkdown and KaTeX for rendering -->
+    <script src="https://unpkg.com/react-markdown@8.0.7/react-markdown.min.js"></script>
+    <script src="https://unpkg.com/react-katex@3.0.1/dist/react-katex.js"></script>
+
+    <script type="text/babel">
+        const { useState, useEffect, useRef } = React;
+        const { createRoot } = ReactDOM;
+        const ReactMarkdown = window.ReactMarkdown;
+        const { InlineMath, BlockMath } = reactKatex;
+
+        // --- Mock Data ---
+        // In a real app, this would come from your API
+        const mockCourseData = {
+            title: "Quantum Computing Fundamentals",
+            description: "An introductory course on the principles of quantum mechanics and computation.",
+            modules: [
+                {
+                    id: 'mod1',
+                    title: 'Module 1: Introduction to Quantum Mechanics',
+                    lectures: [
+                        {
+                            id: 'lec1',
+                            title: 'Core Concepts',
+                            lessons: [
+                                { id: 'l1', title: 'What is a Qubit?' },
+                                { id: 'l2', title: 'Superposition Explained' },
+                                { id: 'l3', title: 'Entanglement' },
+                            ]
+                        }
+                    ]
+                },
+                {
+                    id: 'mod2',
+                    title: 'Module 2: Quantum Gates & Circuits',
+                    lectures: [
+                        {
+                            id: 'lec2',
+                            title: 'Building Blocks',
+                            lessons: [
+                                { id: 'l4', title: 'Single-Qubit Gates' },
+                                { id: 'l5', title: 'Multi-Qubit Gates' },
+                                { id: 'l6', title: 'Constructing a Circuit' },
+                            ]
+                        }
+                    ]
+                },
+                 {
+                    id: 'mod3',
+                    title: 'Module 3: Advanced Topics',
+                    lectures: [
+                        {
+                            id: 'lec3',
+                            title: 'Algorithms',
+                            lessons: [
+                                { id: 'l7', title: "Shor's Algorithm" },
+                                { id: 'l8', title: "Grover's Algorithm" },
+                            ]
+                        }
+                    ]
+                }
+            ]
+        };
+
+        const mockLessonContent = {
+            l2: {
+                content: {
+                    contents: [
+                        { type: 'heading', text: 'Understanding Superposition' },
+                        { type: 'paragraph', text: "In classical computing, a bit is always in one of two states: 0 or 1. A qubit, however, can exist in a state of **superposition**, which means it can be a combination of both 0 and 1 simultaneously. This is a fundamental concept that gives quantum computers their power." },
+                        { type: 'paragraph', text: "We can represent the state of a qubit, denoted by $|\psi\rangle$, as a linear combination of its basis states, $|0\rangle$ and $|1\rangle$:" },
+                        { type: 'formula', text: "|\\psi\\rangle = \\alpha|0\\rangle + \\beta|1\\rangle" },
+                        { type: 'paragraph', text: "Here, $\\alpha$ and $\\beta$ are complex numbers called probability amplitudes. When we measure the qubit, the probability of it collapsing to state $|0\rangle$ is $|\alpha|^2$, and the probability of it collapsing to state $|1\rangle$ is $|\beta|^2$. The sum of these probabilities must be 1:" },
+                        { type: 'formula', text: "|\\alpha|^2 + |\\beta|^2 = 1" },
+                        { type: 'paragraph', text: "This ability to exist in multiple states at once allows quantum computers to perform many calculations in parallel." }
+                    ]
+                }
+            }
+        };
+
+        const mockChatHistory = {
+            l2: [
+                { role: 'tutor', content: 'Welcome! Do you have any questions about superposition?' },
+                { role: 'user', content: 'What is the physical meaning of alpha and beta?' },
+                { role: 'tutor', content: "Great question! They don't have a direct physical meaning themselves, but their squared magnitudes, $|\alpha|^2$ and $|\beta|^2$, represent the probabilities of measuring the qubit as 0 or 1, respectively." }
+            ]
+        };
+
+        // --- Components ---
+
+        const DynamicLessonRenderer = ({ contents }) => {
+            if (!contents) return null;
+
+            const renderContent = (item, index) => {
+                switch (item.type) {
+                    case 'heading':
+                        return <h2 key={index}>{item.text}</h2>;
+                    case 'paragraph':
+                        return <p key={index}><ReactMarkdown children={item.text} /></p>;
+                    case 'formula':
+                        return <div key={index} className="my-3"><BlockMath math={item.text} /></div>;
+                    default:
+                        return null;
+                }
+            };
+            return <div className="lesson-content">{contents.map(renderContent)}</div>;
+        };
+
+        const Message = ({ message }) => {
+            const { role, content } = message;
+            const isUser = role === 'user';
+            const rowClass = isUser ? 'user-row' : 'tutor-row';
+            const bubbleClass = isUser ? 'user-message' : 'tutor-message';
+
+            return (
+                <div className={`message-row ${rowClass}`}>
+                    <div className={`message-bubble ${bubbleClass}`}>
+                        <ReactMarkdown 
+                            children={content}
+                            components={{
+                                p: 'span',
+                                math: ({ value }) => <InlineMath math={value} />,
+                            }}
+                        />
+                    </div>
+                </div>
+            );
+        };
+
+        const MessageInput = ({ onSendMessage }) => {
+            const [text, setText] = useState('');
+
+            const handleSubmit = (e) => {
+                e.preventDefault();
+                if (text.trim()) {
+                    onSendMessage(text);
+                    setText('');
+                }
+            };
+
+            return (
+                <form onSubmit={handleSubmit} className="message-input-form">
+                    <input
+                        type="text"
+                        className="form-control"
+                        value={text}
+                        onChange={(e) => setText(e.target.value)}
+                        placeholder="Ask a question..."
+                    />
+                    <button type="submit" className="btn btn-primary">
+                        <i className="fas fa-paper-plane"></i>
+                    </button>
+                </form>
+            );
+        };
+
+        const Chatbox = ({ messages = [], onSendMessage }) => {
+             const messagesEndRef = useRef(null);
+
+            const scrollToBottom = () => {
+                messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
+            };
+
+            useEffect(() => {
+                scrollToBottom();
+            }, [messages]);
+
+            return (
+                <div className="chat-container">
+                    <div className="chatbox-header">
+                        <h5><i className="fas fa-robot me-2"></i>AI Tutor</h5>
+                    </div>
+                    <div className="chat-messages">
+                        {messages.map((msg, index) => (
+                            <Message key={index} message={msg} />
+                        ))}
+                        <div ref={messagesEndRef} />
+                    </div>
+                    <div className="chatbox-footer">
+                        <MessageInput onSendMessage={onSendMessage} />
+                    </div>
+                </div>
+            );
+        };
+
+        const CourseSidebar = ({ course, selectedLessonId, onSelectLesson }) => {
+            return (
+                <div className="sidebar-container scrollable-container">
+                    <div className="course-sidebar">
+                        <div className="course-header mb-4">
+                            <h4>{course.title}</h4>
+                            <p className="text-muted">{course.description}</p>
+                        </div>
+
+                        {course.modules.map((mod) => (
+                            <div key={mod.id}>
+                                <h5 className="module-header">
+                                    <i className="fas fa-layer-group"></i>
+                                    {mod.title}
+                                </h5>
+                                {mod.lectures.map((lec) => (
+                                    <ul key={lec.id} className="lesson-list">
+                                        {lec.lessons.map((lesson) => (
+                                            <li
+                                                key={lesson.id}
+                                                className={`lesson-item ${lesson.id === selectedLessonId ? 'active' : ''}`}
+                                                onClick={() => onSelectLesson(lesson.id)}
+                                            >
+                                                <i className="fas fa-book-open"></i>
+                                                {lesson.title}
+                                            </li>
+                                        ))}
+                                    </ul>
+                                ))}
+                            </div>
+                        ))}
+                    </div>
+                </div>
+            );
+        };
+
+        const CoursePage = () => {
+            // NOTE: The logic from your original file is preserved here.
+            // I'm using mock data for demonstration purposes.
+            const [course, setCourse] = useState(null);
+            const [selectedLessonId, setSelectedLessonId] = useState(null);
+            const [lesson, setLesson] = useState(null);
+            const [chatHistories, setChatHistories] = useState({});
+
+            // Initial data fetching simulation
+            useEffect(() => {
+                // Simulate fetching course data
+                setCourse(mockCourseData);
+                // Simulate fetching all chat histories
+                setChatHistories(mockChatHistory);
+            }, []);
+
+            // Effect to handle lesson selection
+            useEffect(() => {
+                if (!selectedLessonId) return;
+                
+                // Simulate fetching lesson content
+                setLesson(mockLessonContent[selectedLessonId] || null);
+
+            }, [selectedLessonId]);
+            
+            const handleSendMessage = (text) => {
+                if (!selectedLessonId) return;
+
+                const newMessage = { role: 'user', content: text };
+                
+                const currentHistory = chatHistories[selectedLessonId] || [];
+
+                // Optimistically update UI
+                setChatHistories(prev => ({
+                    ...prev,
+                    [selectedLessonId]: [...currentHistory, newMessage]
+                }));
+
+                // Here you would make your API call to the backend
+                console.log(`Sending to backend for lesson ${selectedLessonId}:`, text);
+                
+                // Simulate a tutor response
+                setTimeout(() => {
+                    const tutorResponse = { role: 'tutor', content: "That's an interesting point. Let me think..." };
+                     setChatHistories(prev => ({
+                        ...prev,
+                        [selectedLessonId]: [...prev[selectedLessonId], tutorResponse]
+                    }));
+                }, 1500);
+            };
+
+            if (!course) return <div>Loading...</div>;
+
+            return (
+                <div className="course-page-wrapper">
+                    <CourseSidebar
+                        course={course}
+                        selectedLessonId={selectedLessonId}
+                        onSelectLesson={(id) => setSelectedLessonId(id)}
+                    />
+
+                    <div className="lesson-content-container scrollable-container">
+                        {selectedLessonId && lesson?.content?.contents ? (
+                            <DynamicLessonRenderer contents={lesson.content.contents} />
+                        ) : (
+                            <div className="placeholder-message">
+                                <h3>Welcome to {course.title}</h3>
+                                <p><i className="fas fa-arrow-left"></i> Please select a lesson from the sidebar to begin.</p>
+                            </div>
+                        )}
+                    </div>
+
+                    <Chatbox
+                        messages={chatHistories[selectedLessonId] || []}
+                        onSendMessage={handleSendMessage}
+                    />
+                </div>
+            );
+        };
+
+        const root = createRoot(document.getElementById('root'));
+        root.render(<CoursePage />);
+
+    </script>
+</body>
+</html>
