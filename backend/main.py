@@ -25,7 +25,7 @@ def delivery(course_id):
         json_file_path = os.path.join(FILES_DIRECTORY, 'conversation.json')
         if not os.path.exists(json_file_path):
             return jsonify({"error": "Conversation file not found"}), 404
-        with open(json_file_path, 'r') as file:
+        with open(json_file_path, 'r', encoding='utf-8') as file:
             conversation_data = file.read()
         return jsonify({
             "course_id": course_id,
@@ -52,7 +52,7 @@ def lesson(course_id):
         json_file_path = os.path.join(FILES_DIRECTORY, 'lesson.json')
         if not os.path.exists(json_file_path):
             return jsonify({"error": "Lesson file not found"}), 404
-        with open(json_file_path, 'r') as file:
+        with open(json_file_path, 'r', encoding='utf-8') as file:
             lesson_data = file.read()
         return jsonify({
             "course_id": course_id,
@@ -74,7 +74,7 @@ def course(course_id):
         json_file_path = os.path.join(FILES_DIRECTORY, 'course.json')
         if not os.path.exists(json_file_path):
             return jsonify({"error": "Course file not found"}), 404
-        with open(json_file_path, 'r') as file:
+        with open(json_file_path, 'r', encoding='utf-8') as file:
             course_data = file.read()
         return jsonify({
             "course_id": course_id,
