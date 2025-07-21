@@ -15,7 +15,7 @@ const Chatbox = ({ messages = [], onSendMessage, lessonSelected }) => {
 
   const handleToggleRecording = () => {
     setIsRecording(prev => !prev);
-    // Add WebSocket or audio recording logic if needed
+    // Add WebSocket or audio recording if needed
   };
 
   return (

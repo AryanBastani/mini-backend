@@ -1,4 +1,3 @@
-// src/components/CourseSidebar.jsx
 import React, { useState } from 'react';
 import '../styles/CourseSidebar.css';
 

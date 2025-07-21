@@ -2,6 +2,7 @@ import React from 'react';
 import { Routes, Route } from 'react-router-dom';
 import UserProfilePage from './pages/UserProfilePage';
 import CoursePage from './pages/CoursePage';
+import './App.css'
 
 function App() {
   return (

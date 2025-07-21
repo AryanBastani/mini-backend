@@ -9,7 +9,6 @@ const CoursePage = () => {
   const [course, setCourse] = useState(null);
   const [selectedLessonId, setSelectedLessonId] = useState(null);
   const [lesson, setLesson] = useState(null);
-  // State to hold chat history for ALL lessons, keyed by lessonId
   const [chatHistories, setChatHistories] = useState({});
 
   const courseId = "course-quantum-computing-101";
@@ -28,7 +27,6 @@ const CoursePage = () => {
   useEffect(() => {
     if (!selectedLessonId) return;
 
-    // Fetch lesson content
     fetch(`/api/${courseId}/lesson/?lesson_id=${selectedLessonId}&user_id=${userId}`)
       .then((res) => res.json())
       .then((data) => {
@@ -37,12 +35,10 @@ const CoursePage = () => {
       })
       .catch((err) => console.error("Failed to load lesson:", err));
 
-    // Fetch chat history only if it's not already loaded
     if (!chatHistories[selectedLessonId]) {
       fetch(`/api/${courseId}/delivery/?lesson_id=${selectedLessonId}&user_id=${userId}`)
         .then((res) => res.json())
         .then((data) => {
-          // The backend returns a stringified JSON, so we parse it.
           const parsedHistory = JSON.parse(data.data);
           setChatHistories(prev => ({
             ...prev,
@@ -62,13 +58,11 @@ const CoursePage = () => {
       image: "" // User messages typically don't have images
     };
 
-    // Optimistically update the UI
     setChatHistories(prev => ({
       ...prev,
       [lessonId]: [...(prev[lessonId] || []), newMessage]
     }));
 
-    // POST the new message to the backend
     fetch(`/api/${courseId}/delivery/`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
@@ -80,7 +74,6 @@ const CoursePage = () => {
     })
     .then(res => res.json())
     .then(data => {
-      // Here you might handle a response from the tutor if the backend provides one
       console.log("Backend response:", data);
     })
     .catch((err) => console.error("Failed to send message:", err));

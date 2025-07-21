@@ -1,4 +1,3 @@
-// src/components/forms/ProfileForm.jsx
 import React, { useState, useEffect } from 'react';
 import { Form, Button, Alert, Card } from 'react-bootstrap';
 import '../../styles/ProfileForm.css';
