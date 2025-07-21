@@ -1,0 +1,29 @@
+.message-row {
+    margin-bottom: 0.75rem;
+  }
+  
+  .message-bubble {
+    display: inline-block;
+    padding: 0.5rem 1rem;
+    border-radius: 1.25rem;
+    max-width: 75%;
+  }
+  
+  .user-message {
+    background-color: #007bff;
+    color: white;
+    border-top-right-radius: 0.25rem;
+  }
+  
+  .tutor-message {
+    background-color: #f1f0f0;
+    color: #333;
+    border-top-left-radius: 0.25rem;
+  }
+  
+  .message-timestamp {
+    font-size: 0.75rem;
+    color: #a0a0a0;
+    margin-top: 0.25rem;
+    text-align: right;
+  }
