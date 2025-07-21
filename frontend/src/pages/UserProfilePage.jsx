@@ -1,7 +1,7 @@
-// src/pages/UserProfilePage.jsx
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import ProfileForm from '../components/forms/ProfileForm';
-import { Spinner } from 'react-bootstrap'; // Assuming you use Spinner for loading
+import { Spinner } from 'react-bootstrap';
 
 const UserProfilePage = ({ userId }) => {
   const [profileData, setProfileData] = useState(null);
@@ -9,34 +9,23 @@ const UserProfilePage = ({ userId }) => {
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
 
-  // You would typically fetch initial profile data here
-  // useEffect(() => {
-  //   const fetchCurrentProfile = async () => {
-  //     setLoading(true);
-  //     try {
-  //       const response = await fetch(`/api/profile/${userId}`); // Example GET endpoint
-  //       if (response.ok) {
-  //         const data = await response.json();
-  //         setProfileData(data); // Set initial form data
-  //       } else {
-  //         setError('Failed to fetch current profile data.');
-  //       }
-  //     } catch (err) {
-  //       setError('Network error fetching profile.');
-  //     //  setProfileData({}); // Consider setting to empty object on error too
-  //     } finally {
-  //       setLoading(false);
-  //     }
-  //   };
-  //   fetchCurrentProfile();
-  // }, [userId]);
-
+  const navigate = useNavigate(); 
 
   const handleProfileSubmit = async (formData) => {
     setMessage('');
     setError('');
-    setLoading(true);
 
+    if (
+      !formData.firstName?.trim() ||
+      !formData.lastName?.trim() ||
+      !formData.email?.trim() ||
+      !formData.gender?.trim()
+    ) {
+      setError('All fields are required.');
+      return;
+    }
+
+    setLoading(true);
     try {
       const response = await fetch('/api/profile/', {
         method: 'PUT',
@@ -53,8 +42,7 @@ const UserProfilePage = ({ userId }) => {
       });
 
       if (response.ok) {
-        setMessage('Profile updated successfully!');
-        // Optionally, refetch profile data here to ensure UI is updated
+        navigate('/course');
       } else {
         const errorData = await response.json();
         setError(errorData.message || 'Failed to update profile.');
@@ -70,9 +58,13 @@ const UserProfilePage = ({ userId }) => {
   return (
     <div className="container mt-4">
       <h2 className="mb-4">User Profile Settings</h2>
-      {loading && <div className="text-center"><Spinner animation="border" size="sm" /> Loading profile...</div>}
+      {loading && (
+        <div className="text-center mb-3">
+          <Spinner animation="border" size="sm" /> Loading...
+        </div>
+      )}
       <ProfileForm
-        initialData={profileData || {}} 
+        initialData={profileData || {}}
         onSubmit={handleProfileSubmit}
         message={message}
         error={error}

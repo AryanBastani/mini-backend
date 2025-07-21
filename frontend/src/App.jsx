@@ -1,11 +1,15 @@
-import './App.css'
-import CoursePage from "./pages/CoursePage";
-import TestRenderer from "./pages/TestRenderer";
-import UserProfilePage from "./pages/UserProfilePage";
-import 'bootstrap/dist/css/bootstrap.min.css';
+import React from 'react';
+import { Routes, Route } from 'react-router-dom';
+import UserProfilePage from './pages/UserProfilePage';
+import CoursePage from './pages/CoursePage';
 
 function App() {
-  return <CoursePage />;
+  return (
+    <Routes>
+      <Route path="/" element={<UserProfilePage userId="123" />} />
+      <Route path="/course" element={<CoursePage />} />
+    </Routes>
+  );
 }
 
 export default App;
